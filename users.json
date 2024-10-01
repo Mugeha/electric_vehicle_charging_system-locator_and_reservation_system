@@ -1,0 +1,52 @@
+[
+    {
+        "name": "Alice Johnson",
+        "email": "alice.johnson@example.com",
+        "password": "$2b$10$Q/x3WPlBKM3C2iZx9PoyVu.8RjsjuOZHEaHrcDV01WGFfKxNLpuRO"
+    },
+    {
+        "name": "Bob Smith",
+        "email": "bob.smith@example.com",
+        "password": "$2b$10$vx/NycgY/M5.d3FyLiNFWezvjWNeNGQOMo1u2oRjnRyf91m1MwzBW"
+    },
+    {
+        "name": "Carol Davis",
+        "email": "carol.davis@example.com",
+        "password": "$2b$10$91w/rQjthv.XZeTc91xMMerHDcS7lBQSCizn7tlqu9fpuD77vyTX."
+    },
+    {
+        "name": "David Brown",
+        "email": "david.brown@example.com",
+        "password": "$2b$10$OC0StrDptJdprsW3XEmFjukEOT42Ad84SjAsIMW82I9BGxM141a4G"
+    },
+    {
+        "name": "Eva Taylor",
+        "email": "eva.taylor@example.com",
+        "password": "$2b$10$BQyIP18DErk3swouY3KZL.bL3lrgs8NQWMRIWYUUhqka1.wGWldRu"
+    },
+    {
+        "name": "Frank White",
+        "email": "frank.white@example.com",
+        "password": "$2b$10$LMYTbFnu6t48S735zDohV.au5WwRSh5XTxdExlcSBNcF.7intjO5a"
+    },
+    {
+        "name": "Grace Hall",
+        "email": "grace.hall@example.com",
+        "password": "$2b$10$QDF7f4QcVv/sRyKkexyitOh/BB19tY1hL1h5Mn5rgCXh0z.AXZYpa"
+    },
+    {
+        "name": "Henry Clark",
+        "email": "henry.clark@example.com",
+        "password": "$2b$10$F446BltEnW0Ix4mVf4klXe082E/JC4X7qSWwloriFSF96NS174sJ."
+    },
+    {
+        "name": "Ivy Lee",
+        "email": "ivy.lee@example.com",
+        "password": "$2b$10$MG7ob8EVItJGx7wCZY7Kk.ufOhraQz1Qj/mI5w.SLClC5x5t21.xC"
+    },
+    {
+        "name": "Jack Adams",
+        "email": "jack.adams@example.com",
+        "password": "$2b$10$SbogzA1qVs28yWWgsgjCtunnxuMPSxAp6x6U2ikSnT9jzBFgnSVOi"
+    }
+]
