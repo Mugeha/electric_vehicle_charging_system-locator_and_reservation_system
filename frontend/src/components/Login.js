@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -22,7 +22,7 @@ const Login = () => {
       localStorage.setItem("token", response.data.token);
       navigate("/dashboard"); // or any protected route
     } catch (error) {
-      setMessage(`${error}`);
+      setMessage("Login failed. Please try again.");
     }
   };
 
@@ -45,8 +45,19 @@ const Login = () => {
         <button type="submit">Login</button>
       </form>
       <p>{message}</p>
+      <p style={styles.container}>
+        Don't have an account? <Link to="/signup">Signup</Link>
+      </p>
+      <p>
+        Forgot your password? <Link to="/forgot-password">Reset Password</Link>
+      </p>
     </div>
   );
+};
+const styles = {
+  container: {
+    color: "white", // Use quotes around 'white'
+  },
 };
 
 export default Login;
