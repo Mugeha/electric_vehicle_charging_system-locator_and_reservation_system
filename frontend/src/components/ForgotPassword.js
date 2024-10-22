@@ -1,38 +1,53 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import axios from "axios";
 
-const ForgotPassword = () => {
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
-  const navigate = useNavigate();
+const ForgotPassword = ({ onClose, onChangeAuthType }) => {
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleForgotPassword = async (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     try {
-      const response = await axios.post('http://localhost:5000/api/users/forgot-password', {
+      await axios.post("http://localhost:5000/api/users/forgot-password", {
         email,
       });
-      setMessage('Password reset link sent to your email.');
+      setMessage("Password reset link sent to your email.");
     } catch (error) {
-      setMessage(`Failed to send reset link. Please try again. ${error}`);
+      setMessage(error.response?.data?.message || "Failed to send reset link.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div>
+    <div className="auth-container">
       <h2>Forgot Password</h2>
       <form onSubmit={handleForgotPassword}>
         <input
           type="email"
-          placeholder="Enter your email"
+          placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          aria-label="Email"
         />
-        <button type="submit">Send Reset Link</button>
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? "Sending..." : "Send Reset Link"}
+        </button>
       </form>
-      <p>{message}</p>
+      <p className="p">{message}</p>
+      <p className="p" onClick={() => onChangeAuthType("login")}>
+        <i
+          style={{
+            color: "#007bff",
+            textDecoration: "underline",
+            cursor: "pointer",
+          }}
+        >
+          Back to Login
+        </i>
+      </p>
     </div>
   );
 };

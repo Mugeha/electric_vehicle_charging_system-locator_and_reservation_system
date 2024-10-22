@@ -11,13 +11,6 @@ h2 {
   text-align: center;
 }
 .App {
-  display: flex;
-  background-color: rgba(68, 68, 68, 0.774);
-  min-width: 100vw;
-  min-height: 100vh;
-  justify-content: center;
-  align-items: center;
+ padding:0;
 }
-.p{
-  color:white;
-}
+

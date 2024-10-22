@@ -1,40 +1,54 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate, Link } from 'react-router-dom'; // Make sure to import Link
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-const Signup = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
+import Login from "./Login";
+import "./Auth.css";
+import "../Header.css";
+
+const Signup = ({ authType, onClose, onChangeAuthType }) => {
+  const [isLogin, setIsLogin] = useState(authType === "login");
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
   const handleSignup = async (e) => {
     e.preventDefault();
-
     if (!name || !email || !password) {
       setMessage("All fields are required.");
       return;
     }
-
     try {
-      const response = await axios.post('http://localhost:5000/api/users/signup', {
-        name,
-        email,
-        password,
-      });
-      setMessage('Signup successful!');
-      localStorage.setItem('token', response.data.token);
-      navigate('/login');
+      const response = await axios.post(
+        "http://localhost:5000/api/users/signup",
+        { name, email, password }
+      );
+      setMessage("Signup successful!");
+      localStorage.setItem("token", response.data.token);
+      navigate("/login");
+      onClose();
     } catch (error) {
-      setMessage('Signup failed. Please try again.');
-      console.error('Error:', error.response.data);  // Log the error details for debugging
+      setMessage("Signup failed. Please try again.");
     }
+  };
+  const toggleAuthMode = () => {
+    setIsLogin(!isLogin);
+    setIsForgotPassword(false);
+  };
+  useEffect(() => {
+    setIsLogin(authType === "login");
+  }, [authType]);
+  const goToLogin = () => {
+    onChangeAuthType("login");
   };
 
   return (
-    <div>
-      <h2>Signup</h2>
+    <div className="auth-container">
+      <h2>Sign Up</h2>
       <form onSubmit={handleSignup}>
         <input
           type="text"
@@ -54,20 +68,24 @@ const Signup = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit">Signup</button>
+        <button type="submit">Sign Up</button>
       </form>
-      <p>{message}</p>
-      <p style={styles.container}>
-        Already have an account? <Link to="/login">Login</Link>
+      <p className="p" onClick={goToLogin}>
+        {" "}
+        Have an account?
+        <i
+          style={{
+            color: "#007bff",
+            textDecoration: "underline",
+            cursor: "pointer",
+          }}
+        >
+          Login here
+        </i>
       </p>
+      <p className="p">{message}</p>
     </div>
   );
-};
-
-const styles = {
-  container: {
-    color: "white", // Use quotes around 'white'
-  },
 };
 
 export default Signup;

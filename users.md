@@ -60,3 +60,18 @@ Here are the actual values of the hashed passwords for the 10 users, with the or
     - Hashed Password: `$2b$10$ZOc/pv/GyFqzslUQYSG.v.T/0oAyHynlcc03IBKN9jvW.nzngepCm`
 
 These hashed passwords can be used in your authentication system where the original password is compared to the hashed version using bcrypt during login.
+
+  <div>
+          <h2>Signup</h2>
+          <form>
+            <input type="text" placeholder="Name" />
+            <input type="email" placeholder="Email" />
+            <input type="password" placeholder="Password" />
+            <button type="submit">Sign Up</button>
+          </form>
+          <p>Already have an account? <span onClick={toggleAuthMode}>Login</span></p>
+        </div>
+
+        <button onClick={onClose} className="close-button">X</button>
+
+           /*<button onClick={onClose} className="close-button">X</button>
