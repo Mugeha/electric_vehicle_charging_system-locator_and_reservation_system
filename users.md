@@ -75,3 +75,9 @@ These hashed passwords can be used in your authentication system where the origi
         <button onClick={onClose} className="close-button">X</button>
 
            /*<button onClick={onClose} className="close-button">X</button>
+
+              <img src={require('./icons/closebtn.png')} alt="Close" style={{ width: '24px' }} />
+
+      <div style={{width:"250px", height:"250px", marginRight: "500px", marginTop: "200px"}}>
+<img src={logo} alt="VEHICLECHARGING" />
+  </div>

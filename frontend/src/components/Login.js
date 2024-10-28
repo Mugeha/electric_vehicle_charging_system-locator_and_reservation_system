@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./Auth.css"; // Assuming you save the above CSS in a file named Auth.css
 import "../Header.css";
+import logo from './icons/vehiclecharging.jpg';
 
 const Login = ({ authType, onClose, onChangeAuthType }) => {
   const [isLogin, setIsLogin] = useState(authType === "login");
-  const [isForgotPassword, setIsForgotPassword] = useState(false);
-  // const [name, setName] = useState('');
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -29,37 +28,46 @@ const Login = ({ authType, onClose, onChangeAuthType }) => {
       navigate("/dashboard");
       onClose();
     } catch (error) {
-      setMessage(`Login failed. Please try again. ${error}`);
+      setMessage(
+        `Login failed. Please try again. ${
+          error.response.data.message || error.message
+        }`
+      );
     }
   };
+
   const goToSignup = () => {
     onChangeAuthType("signup"); // Open signup modal
   };
 
   const goToForgotPassword = () => {
-    // onClose(); // Close current modal
     onChangeAuthType("forgot-password"); // Open forgot password modal
   };
 
   return (
-    <div className="auth-container">
-      <h2>Login</h2>
+    <>
+<div className="auth-container">
+
+  <div>
+  <h2>Login</h2>
       <form onSubmit={handleLogin}>
         <input
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required
         />
         <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          required
         />
         <button type="submit">Login</button>
       </form>
-      <p className="p">{message}</p>
+      {message && <p className="p">{message}</p>}
       <p className="p" onClick={goToSignup}>
         Don't have an account?
         <i
@@ -86,7 +94,12 @@ const Login = ({ authType, onClose, onChangeAuthType }) => {
           Reset Password
         </i>
       </p>
+  </div>
+      
     </div>
+    </>
+    
   );
 };
+
 export default Login;

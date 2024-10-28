@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useParams, useNavigate } from "react-router-dom";
-import './Auth.css';
+import { useNavigate } from "react-router-dom";
+import "./Auth.css";
 
-const ResetPassword = () => {
-  const { token } = useParams(); // Get the token from the URL
+const ResetPassword = ({ onChangeAuthType }) => {
+  const [email, setEmail] = useState(""); // Email input for OTP identification
+  const [otp, setOtp] = useState(""); // OTP input
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -22,17 +23,16 @@ const ResetPassword = () => {
 
     setIsLoading(true);
     try {
+      // Send email, OTP, and new password to backend
       const response = await axios.post(
-        `http://localhost:5000/api/users/reset-password/${token}`,
-        { password }
+        `http://localhost:5000/api/users/verify-otp`, // Backend API for OTP validation
+        { email, otp, newPassword: password }
       );
       setMessage("Password reset successful! Redirecting to login...");
       setError("");
-      setTimeout(() => navigate("/login"), 3000); // Redirect after 3 seconds
+      setTimeout(() => onChangeAuthType("login"), 3000); // Redirect after 3 seconds
     } catch (error) {
-      setError(
-        "Failed to reset password. Please try again or check if the reset link is valid."
-      );
+      setError("Failed to reset password. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -44,8 +44,24 @@ const ResetPassword = () => {
 
   return (
     <div className="auth-container">
-      <h2>Reset Password</h2>
+      <h2>Reset Password with OTP</h2>
       <form onSubmit={handleResetPassword}>
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          aria-label="Email"
+          required
+        />
+        <input
+          type="text"
+          placeholder="Enter OTP"
+          value={otp}
+          onChange={(e) => setOtp(e.target.value)}
+          aria-label="OTP"
+          required
+        />
         <input
           type={passwordVisible ? "text" : "password"}
           placeholder="New Password"

@@ -1,10 +1,15 @@
  Styles for the entire form container 
  .auth-container {
   background-color: #f0f0f0;
-  /*padding: 1.0rem;*/
+  padding: 2.0em;
   border-radius: 7px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
+  display: flex;
+  width: 100%;
+  /*padding-left: 5.0em;
+  padding-right: 5.0em;*/
+  margin-right: 4.0em;
 }
   .auth-container h2 {
     text-align: center;
@@ -30,7 +35,7 @@
     border-radius: 5px;
     background-color: #fffefe;
     color:black;
-    width:100%;
+    width:15vw;
   }
   .modal button,
   .auth-container button {
@@ -40,7 +45,7 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    width:100%;
+    width:17vw;
   }
   .modal button:hover,
   .auth-container button:hover {
@@ -107,37 +112,46 @@ background:#ddd;
   }*/
   .modal-background {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    /*top: 100px;
+    left: 200px;*/
+    width: 100vw;
+    height: 100vh;
     background: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center; 
     align-items: center;
     text-align: center;
-    align-content: center;
-    align-self: center;
-    z-index: 1000;  
+    /*align-content: center;
+    align-self: center;*/
+    z-index: 10000; 
+    
+    /*padding-left: -1050px;*/
+     
   }
   
   .modal-content {
     background-color: white;
-    padding-top:0;
-    padding-left: 4.0rem;
-    padding-bottom: 0;
-    padding-right:0;
+    padding: 150px;
     border-radius: 7px;
-    margin: auto;
-    width: 40%; /* Adjust as necessary */
-    position: relative; /* For the close button positioning */
-    max-width: 500px; /* Optional: limit max width for larger screens */
+    margin-right: 10px;
+    margin-top: 35px;
+    position: relative; 
+    /*max-width: 500px;*/ 
     text-align: center;
+    width:100vw;
+    height:60vh;
+    /*width:500px;*/
     /*flex-direction: column;*/
   }
+  .modal-content content{
+    padding: 500px;
+    width:50vw;
+  }
   .modal-content .auth-container{
-    padding-top: 1.5rem;
-    width:30vw;
+    padding-top: 0;
+    padding-left: 4.0em;
+    padding-right:5.0em;
+    width:100vw;
   }
   
   .modal-content span {

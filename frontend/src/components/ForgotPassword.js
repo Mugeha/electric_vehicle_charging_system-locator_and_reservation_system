@@ -14,6 +14,7 @@ const ForgotPassword = ({ onClose, onChangeAuthType }) => {
         email,
       });
       setMessage("Password reset link sent to your email.");
+      setTimeout(() => onChangeAuthType("reset-password"), 3000); 
     } catch (error) {
       setMessage(error.response?.data?.message || "Failed to send reset link.");
     } finally {

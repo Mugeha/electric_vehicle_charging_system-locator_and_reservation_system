@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const userRoutes = require("./routes/userRoutes");
+const StationRoutes = require("./routes/StationRoutes");
 const verifyToken = require("./middleware/authMiddleware");
 
 const app = express();
@@ -19,6 +20,7 @@ mongoose
 
 // Routes
 app.use("/api/users", userRoutes);
+app.use('/api/stations', StationRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 5000;

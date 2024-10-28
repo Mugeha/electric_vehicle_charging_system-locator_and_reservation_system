@@ -1,20 +1,28 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
+const nodemailer = require("nodemailer");
 require("dotenv").config();
 
 // Signup logic
 exports.signup = async (req, res) => {
   console.log(req.body);
   const { name, email, password } = req.body;
+
   if (!name || !email || !password) {
     return res.status(400).json({ message: "All fields are required" });
   }
+
   try {
     let user = await User.findOne({ email });
     if (user) return res.status(400).json({ message: "User already exists" });
 
-    user = new User({ name, email, password });
+    // Hash the password before saving
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    user = new User({ name, email, password: hashedPassword });
     await user.save();
 
     const payload = { user: { id: user._id } };
@@ -23,7 +31,7 @@ exports.signup = async (req, res) => {
     });
 
     res.status(201).json({ token });
-    console.log(req.body); // Add this to debug
+    console.log(req.body); // Debugging output
   } catch (err) {
     res.status(500).json({ message: "Server error" });
   }
@@ -32,6 +40,7 @@ exports.signup = async (req, res) => {
 // Login logic
 exports.login = async (req, res) => {
   const { email, password } = req.body;
+
   try {
     const user = await User.findOne({ email });
     if (!user)
@@ -40,9 +49,9 @@ exports.login = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ message: "Invalid password" });
 
-    const payload = { user: { id: user._id } };
+    const payload = { user: { id: user._id, name: user.name } };
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
-      expiresIn: "4h",
+      expiresIn: "1h",
     });
 
     res.status(200).json({ token });
@@ -51,78 +60,78 @@ exports.login = async (req, res) => {
   }
 };
 
-const crypto = require("crypto");
-const nodemailer = require("nodemailer"); // You'll need to install nodemailer
-
-// Forgot Password logic
+// Forgot Password logic with OTP
 exports.forgotPassword = async (req, res) => {
   const { email } = req.body;
+
   try {
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: "User not found" });
 
-    console.log(`From ${process.env.EMAIL_USER} to ${email}`);
+    console.log(`Sending OTP to ${email}`);
 
-    // Generate a reset token (you can also use JWT)
-    const resetToken = crypto.randomBytes(20).toString("hex");
+    // Generate a 6-digit OTP
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
-    // Save the token and its expiry date in the user's record
-    user.resetPasswordToken = resetToken;
+    // Save the OTP and its expiry date in the user's record
+    user.resetPasswordToken = otp;
     user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
     await user.save();
 
-    // Send email with the reset link
+    // Send OTP via email
     const transporter = nodemailer.createTransport({
       service: "gmail", // or another email service
       auth: {
-        user: process.env.EMAIL_USER, // Make sure these are defined in your .env file
+        user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
       },
     });
 
     const mailOptions = {
       to: user.email,
-      subject: "Password Reset",
+      subject: "Your OTP for Password Reset",
       text:
         `You are receiving this email because you (or someone else) has requested to reset your password.\n\n` +
-        `Please click on the following link, or paste this into your browser to complete the process:\n\n` +
-        `http://localhost:3000/reset-password/${resetToken}\n\n` +
-        `If you did not request this, please ignore this email.\n`,
+        `Your OTP is: ${otp}\n\n` +
+        `If you did not request this, please ignore this email.\n` +
+        `Note: This OTP is valid for 1 hour.`,
     };
 
     // Send the email
     await transporter.sendMail(mailOptions);
 
     // Send a response after email is sent successfully
-    res.status(200).json({ message: "Reset link sent to your email." });
+    res.status(200).json({ message: "OTP sent to your email." });
   } catch (error) {
     console.log(`Server error: ${error}`);
     res.status(500).json({ message: `Server error: ${error.message}` });
   }
 };
 
-// Reset Password logic
-exports.resetPassword = async (req, res) => {
-  const { token } = req.params;
-  const { password } = req.body;
+// Verify OTP and Reset Password logic
+exports.verifyOtpAndResetPassword = async (req, res) => {
+  const { email, otp, newPassword } = req.body;
 
   try {
     const user = await User.findOne({
-      resetPasswordToken: token,
-      resetPasswordExpires: { $gt: Date.now() },
+      email,
+      resetPasswordToken: otp,
+      resetPasswordExpires: { $gt: Date.now() }, // Ensure OTP hasn't expired
     });
 
     if (!user)
-      return res
-        .status(400)
-        .json({ message: "Token is invalid or has expired" });
+      return res.status(400).json({ message: "OTP is invalid or has expired" });
 
-    user.password = password; // Hash it again
-    user.resetPasswordToken = undefined; // Clear the token
-    user.resetPasswordExpires = undefined; // Clear the expiry
+    // Hash the new password
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(newPassword, salt);
+
+    // Clear the OTP and expiry after successful password reset
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
     await user.save();
 
-    res.status(200).json({ message: "Password has been reset" });
+    res.status(200).json({ message: "Password has been reset successfully" });
   } catch (error) {
     res.status(500).json({ message: "Server error" });
   }
