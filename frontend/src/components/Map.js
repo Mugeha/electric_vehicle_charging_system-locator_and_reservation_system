@@ -1,203 +1,314 @@
 import React, { useState, useEffect } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
-import L from 'leaflet';
-import MapSearch from './SearchBar'; // Ensure the correct path for your MapSearch component
+import { GoogleMap, Marker, InfoWindow, useLoadScript } from '@react-google-maps/api';
+import MapSearch from './SearchBar';
 import axios from 'axios';
 import Modal from 'react-modal';
+import carChargingImage from './icons/carcharging.jpeg';
+import directionsIcon from './icons/directionsicon-removebg-preview.png';
+import evcharger from './icons/evchargericon-removebg-preview.png';
 
-// Custom icons for each station type
-const icons = {
-  Available: new L.Icon({
-    iconUrl: require('./icons/locationgreen-removebg-preview.png'),
-    iconSize: [30, 40],
-  }),
-  Occupied: new L.Icon({
-    iconUrl: require('./icons/locationblue2-removebg-preview.png'),
-    iconSize: [40, 40],
-  }),
-  "Not Working": new L.Icon({
-    iconUrl: require('./icons/locationred2-removebg-preview.png'),
-    iconSize: [50, 50],
-  }),
-  "No Information": new L.Icon({
-    iconUrl: require('./icons/locationgrey2-removebg-preview.png'),
-    iconSize: [30, 40],
-  }),
-};
-
-// Functional component to update the map center
-const MapUpdater = ({ center }) => {
-  const map = useMap();
-  map.setView(center, 13);
-  return null;
+const mapOptions = {
+  zoom: 13,
+  center: { lat: -1.286389, lng: 36.817223 }, // Default to Nairobi Central
+  mapTypeId: 'roadmap',
 };
 
 function Map() {
-  const [mapCenter, setMapCenter] = useState([-1.286389, 36.817223]); // Default to Nairobi Central
+  const [mapCenter, setMapCenter] = useState(mapOptions.center);
   const [stations, setStations] = useState([]);
   const [selectedStation, setSelectedStation] = useState(null);
+  const [filter, setFilter] = useState('All'); 
+  const [showAddStationModal, setShowAddStationModal] = useState(false);
+  const [newStation, setNewStation] = useState({
+    name: '',
+    address: '',
+    position: [0, 0],
+    status: 'available', // or other statuses you have
+    rating: 0,
+    power: 0,
+    type: 'g',
+  });// State for the filter
+
+
+  // Load the Google Maps script
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+  });
+
   useEffect(() => {
     // Fetch station data from the API
-    fetch('http://localhost:5000/api/stations')
-      .then(response => response.json())
-      .then(data => setStations(data))
+    axios.get('http://localhost:5000/api/stations')
+      .then(response => setStations(response.data))
       .catch(error => console.error('Error fetching stations:', error));
   }, []);
-  /*const handleClose = () => {
-    setIsPopupOpen(false); // Close the popup
-  };*/
-
-  const handleFavorite = async (station) => {
-    try {
-      await axios.post('http://localhost:5000/api/favoriteStations', { stationId: station.id });
-      console.log(`Station ${station.id} added to favorites.`);
-    } catch (error) {
-      console.error('Error adding to favorites:', error);
-    }
-  };
 
   const handleDirections = (station) => {
-    // Center the map on the selected station for a basic "directions" effect
-    setMapCenter(station.position);
+    const stationPosition = station.position;
+    const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${stationPosition[0]},${stationPosition[1]}`;
+    window.open(directionsUrl, '_blank'); // Open directions in a new tab
   };
 
+  // Filtered stations based on the selected filter
+  const filteredStations = filter === 'All' 
+    ? stations 
+    : stations.filter(station => station.status === filter);
+
+    const handleAddStation = () => {
+        axios.post('http://localhost:5000/api/stations', newStation)
+          .then(response => {
+            setStations([...stations, response.data]);
+            setShowAddStationModal(false);
+            setNewStation({ name: '', address: '', lat: '', lng: '', power: '', type: '' });
+          })
+          .catch(error => console.error('Error adding station:', error));
+      };
+    
+      const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setNewStation(prevState => ({ ...prevState, [name]: value }));
+      };
+  if (!isLoaded) return <div>Loading Map...</div>;
+
   return (
-    <>
-      <MapContainer center={mapCenter} zoom={13} style={{ height: '100vh', width: '100vw' }}>
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        <MapUpdater center={mapCenter} />
-
-        {/* Map the stations to Marker components with customized Popup content */}
-        {stations.map((station, index) => (
-          <Marker
-            key={index}
-            position={station.position}
-            icon={icons[station.status] || icons['No Information']}
-            eventHandlers={{
-                click: () => setSelectedStation(station),
-              }}
-          >
-            {selectedStation && (
-           <Modal isOpen={!!selectedStation}
-          onRequestClose={() => setSelectedStation(null)} style={{overlay: {
-            backgroundColor: 'none',width: '500px',zIndex: '1000' // Semi-transparent black overlay
-          },
-          content: {
-            maxWidth: '250px', // Width of the modal
-            margin: 'auto',     // Centers the modal horizontally
-            /*borderRadius: '10px',
-            padding: '20px',*/
-            backgroundColor: 'none',
-            textAlign: 'left',
-            height: '400px',
-          },}}>
-  <div style={{
-    width: '250px',
-    backgroundColor: '#f3f3f3',
-    /*borderRadius: '10px',*/
-    overflow: 'hidden',
-    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
-    color: '#333',
-    fontFamily: 'Arial, sans-serif'
-  }}>
-    <div style={{ position: 'relative' }}>
-      {/* Top Image */}
-      <img src={require('./icons/carcharging.jpeg')} alt={selectedStation.name} style={{
-        width: '100%',
-        height: '130px',
-        objectFit: 'cover',
-      }} />
-      
-      {/* Favorite Icon */}
-      <img onClick={() => handleFavorite(selectedStation)} src={require('./icons/hearticon.png')} alt="Favorite" style={{
-        width: '24px',
-        position: 'absolute',
-        top: '10px',
-        left: '10px',
-        cursor: 'pointer'
-      }} />
-
-      {/* Close Icon */}
-      <img onClick={() => setSelectedStation(null)} src={require('./icons/closebtn.png')} alt="Close" style={{
-        width: '24px',
-        position: 'absolute',
-        top: '10px',
-        right: '10px',
-        cursor: 'pointer'
-      }} />
-    </div>
-
-    {/* Content Section */}
-    <div style={{ padding: '10px' }}>
-      <h3 style={{
-        fontSize: '16px',
-        margin: '5px 0',
-        color: '#333',
-        fontWeight: 'bold'
-      }}>{selectedStation.name}</h3>
-      
-      <p style={{
-        fontSize: '14px',
-        color: '#555',
-        margin: '5px 0'
-      }}>{selectedStation.address}</p>
-      
-      <p style={{
-        fontSize: '14px',
-        color: '#555',
-        margin: '5px 0'
-      }}>
-        <span style={{ color: 'gold' }}>⭐ {selectedStation.rating} out of 5 ratings</span>
-      </p>
-
-      {/* Power and Type Section */}
-      <div style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        backgroundColor: '#e0e0e0',
-        borderRadius: '5px',
-        padding: '5px 10px',
-        marginTop: '10px',
-        padding: '15px'
-      }}>
-        
-          <img src={require('./icons/evchargericon-removebg-preview.png')} alt="Power Icon" style={{ width: '45px', marginRight: '5px' }} />
-          <div style={{display: 'flex', flexDirection: 'column'}}>
-          <div style={{ fontSize: '14px', fontWeight: '500' }}>{selectedStation.power}</div>
-        <div style={{ fontSize: '14px', color: '#777' }}>Type {selectedStation.type}</div>
-          </div>
-          
-      
-
-      {/* Directions Icon */}
-      <div style={{
-        display: 'flex',
-        justifyContent: 'center',
-        marginTop: '10px'
-      }}>
-        <img onClick={() => handleDirections(selectedStation)} src={require('./icons/directionsicon-removebg-preview.png')} alt="Directions" style={{
-          width: '30px',
-          cursor: 'pointer'
-        }} />
+    <div>
+      {/* Filter Buttons */}
+      <div style={{ position: 'absolute', top: '100px',display: 'flex', flexDirection: 'column', left: '10px', zIndex: 1000 }}>
+        <button onClick={() => setFilter('All')}>All</button>
+        <button onClick={() => setFilter('Available')}>Available</button>
+        <button onClick={() => setFilter('Occupied')}>Occupied</button>
+        <button onClick={() => setFilter('Not Working')}>Not Working</button>
+        <button onClick={() => setFilter('No Information')}>No Information</button>
       </div>
-    </div>
-    
-        <button style={{ marginTop: "30px", marginBottom: "10px", justifyContent: "center", left: "20px", backgroundColor: "#1abc70", marginLeft: "20px" }}>Make Reservation</button>
-    
-  </div>
-  </div>
-</Modal>
 
-    )}
-          </Marker>
+      <GoogleMap
+        mapContainerStyle={{ width: '100vw', height: '100vh' }}
+        center={mapCenter}
+        zoom={mapOptions.zoom}
+        onLoad={(map) => map.setCenter(mapCenter)}
+      >
+        {/* Map filtered stations with markers */}
+        {filteredStations.map((station, index) => (
+          <Marker
+            key={station._id}
+            position={{ lat: station.position[0], lng: station.position[1] }}
+            onClick={() => setSelectedStation(station)}
+          />
         ))}
-      </MapContainer>
+    
+        {/* Selected station info window */}
+        {selectedStation && (
+          <Modal
+            isOpen={!!selectedStation}
+            onRequestClose={() => setSelectedStation(null)}
+            style={{
+              overlay: { backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: '100000' },
+              content: {
+                width: '250px',
+                overflow: 'hidden',
+                margin: 'auto',
+                padding: '10px',
+                backgroundColor: '#fff',
+                height: '400px',
+                display: 'flex',
+                flexDirection: 'column',
+                boxShadow: '0px 4px 8px rgba(0,0,0,0.1)',
+              },
+            }}
+          >
+            <div style={{ position: 'relative', width: '100%' }}>
+              <img 
+                src={carChargingImage} 
+                alt={selectedStation.name} 
+                style={{ width: '100%', height: '130px', objectFit: 'cover', borderRadius: '0px' }}
+              />
+              <button 
+                onClick={() => setSelectedStation(null)}
+                style={{
+                  position: 'absolute',
+                  top: '-15px',
+                  right: '-20px',
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                  fontSize: '40px',
+                  cursor: 'pointer',
+                  color: 'white',
+                }}
+              >×</button>
+            </div>
+
+            <h3 style={{ marginTop: '5px', color: 'black', textAlign: 'left' }}>{selectedStation.name}</h3>
+            <p style={{ color: '#ddd', textAlign: 'left', marginTop: '0px' }}>{selectedStation.address}</p>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <span style={{ color: '#ffc107', marginRight: '5px' }}>⭐ {selectedStation.rating} out of 5</span>
+            </div>
+            
+            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', marginTop: '20px', backgroundColor: '#ddd', borderRadius: '5px', alignItems: 'center' }}>
+              <img src={evcharger} alt="EVcharger" style={{ width: '54px', height: '48px'}} />
+              <div style={{color: 'black'}}>
+                <p>{selectedStation.power} </p>
+                <p>Type {selectedStation.type}</p>
+              </div>
+              <button onClick={() => handleDirections(selectedStation)} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
+                <img src= {directionsIcon} alt="Directions Icon" style={{ width: '30px', height: '30px' }} />
+              </button>
+            </div>
+            <button 
+              style={{
+                width: '100%',
+                padding: '10px',
+                backgroundColor: '#28a745',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '5px',
+                cursor: 'pointer',
+                fontSize: '1rem',
+                marginBottom: '10px',
+                marginTop: '10px',
+              }}
+            >
+              Make Reservation
+            </button>
+          </Modal>
+        )}
+        {/* Add Station Modal */}
+        <button
+        onClick={() => setShowAddStationModal(true)}
+        style={{
+          position: 'fixed',
+          bottom: '20px',
+          right: '20px',
+          backgroundColor: '#1abc70',
+          color: 'white',
+          borderRadius: '50%',
+          width: '50px',
+          height: '50px',
+          fontSize: '24px',
+          textAlign: 'center',
+          cursor: 'pointer',
+          
+          border: 'none',
+        }}
+      >
+        +
+      </button>
+      {/* Add Station Modal */}
+      <Modal
+        isOpen={showAddStationModal}
+        onRequestClose={() => setShowAddStationModal(false)}
+        style={{
+          overlay: { backgroundColor: 'rgba(0, 0, 0, 0.5)' },
+          content: {
+            width: '400px',
+            height: '400px',
+            margin: 'auto',
+            padding: '20px',
+            borderRadius: '8px',
+            backgroundColor: '#fff',
+            overflow: 'hidden',
+          zIndex: 100000000,
+          color: 'black',
+            boxShadow: '0px 4px 12px rgba(0,0,0,0.1)',
+          },
+        }}
+      >
+        {/* Close Button */}
+        <button
+          onClick={() => setShowAddStationModal(false)}
+          style={{
+            position: 'absolute',
+            top: '10px',
+            right: '10px',
+            backgroundColor: 'transparent',
+            border: 'none',
+            fontSize: '24px',
+            cursor: 'pointer',
+            color: '#666',
+          }}
+        >
+          ×
+        </button>
+        <h3 style={{color: 'black'}}>Add a New EV Station</h3>
+        <form onSubmit={(e) => { e.preventDefault(); handleAddStation(); }}>
+          <label>
+            Name:
+            <input
+              type="text"
+              name="name"
+              value={newStation.name}
+              onChange={handleInputChange}
+              required
+            />
+          </label>
+          <label>
+            Address:
+            <input
+              type="text"
+              name="address"
+              value={newStation.address}
+              onChange={handleInputChange}
+              required
+            />
+          </label>
+          <label>
+            Latitude:
+            <input
+              type="number"
+              name="lat"
+              value={newStation.lat}
+              onChange={handleInputChange}
+              required
+            />
+          </label>
+          <label>
+            Longitude:
+            <input
+              type="number"
+              name="lng"
+              value={newStation.lng}
+              onChange={handleInputChange}
+              required
+            />
+          </label>
+          <label>
+            Power (kW):
+            <input
+              type="number"
+              name="power"
+              value={newStation.power}
+              onChange={handleInputChange}
+            />
+          </label>
+          <label>
+            Type:
+            <input
+              type="text"
+              name="type"
+              value={newStation.type}
+              onChange={handleInputChange}
+            />
+          </label>
+          <button
+            type="submit"
+            style={{
+              marginTop: '10px',
+              width: '100%',
+              padding: '10px',
+              backgroundColor: '#1abc70',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '5px',
+              cursor: 'pointer',
+            }}
+          >
+            Add Station
+          </button>
+        </form>
+      </Modal>
+
       <MapSearch setMapCenter={setMapCenter} />
-    </>
+      </GoogleMap>
+    </div>
   );
 }
-
 
 export default Map;

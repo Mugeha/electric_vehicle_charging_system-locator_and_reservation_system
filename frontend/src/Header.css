@@ -106,7 +106,7 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   margin-top: 25px;
   width: 20%;
-  height: 85%;
+  height: 50vh;
   right: 45px;
   z-index: 10000; /* Ensure it appears above other elements */
 }

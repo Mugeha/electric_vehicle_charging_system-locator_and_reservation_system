@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./Auth.css"; // Assuming you save the above CSS in a file named Auth.css
 import "../Header.css";
-import logo from './icons/vehiclecharging.jpg';
+
 
 const Login = ({ authType, onClose, onChangeAuthType }) => {
   const [isLogin, setIsLogin] = useState(authType === "login");
@@ -47,8 +47,6 @@ const Login = ({ authType, onClose, onChangeAuthType }) => {
   return (
     <>
 <div className="auth-container">
-
-  <div>
   <h2>Login</h2>
       <form onSubmit={handleLogin}>
         <input
@@ -96,7 +94,7 @@ const Login = ({ authType, onClose, onChangeAuthType }) => {
       </p>
   </div>
       
-    </div>
+    
     </>
     
   );

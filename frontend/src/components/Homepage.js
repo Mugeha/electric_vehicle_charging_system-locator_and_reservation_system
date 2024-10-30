@@ -154,8 +154,7 @@ const HomePage = () => {
                         <FaCog style={{ marginRight: "5px" }} /> Account Details
                       </li>
                       <li onClick={() => handleDropdownItemClick("payment")}>
-                        <FaCreditCard style={{ marginRight: "5px" }} /> Payment
-                        Methods
+                        <FaCreditCard style={{ marginRight: "5px" }} /> My Reservations
                       </li>
                       <li onClick={() => handleDropdownItemClick("favorites")}>
                         <FaHeart style={{ marginRight: "5px" }} /> Favorite

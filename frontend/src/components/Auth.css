@@ -2,14 +2,13 @@
  .auth-container {
   background-color: #f0f0f0;
   padding: 2.0em;
+  padding-top: 0 !important;
   border-radius: 7px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
   display: flex;
   width: 100%;
-  /*padding-left: 5.0em;
-  padding-right: 5.0em;*/
-  margin-right: 4.0em;
+  
 }
   .auth-container h2 {
     text-align: center;
@@ -35,7 +34,7 @@
     border-radius: 5px;
     background-color: #fffefe;
     color:black;
-    width:15vw;
+    width:100%;
   }
   .modal button,
   .auth-container button {
@@ -45,7 +44,7 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    width:17vw;
+    width:100%;
   }
   .modal button:hover,
   .auth-container button:hover {
@@ -121,8 +120,8 @@ background:#ddd;
     justify-content: center; 
     align-items: center;
     text-align: center;
-    /*align-content: center;
-    align-self: center;*/
+    align-content: center;
+    align-self: center;
     z-index: 10000; 
     
     /*padding-left: -1050px;*/
@@ -130,28 +129,33 @@ background:#ddd;
   }
   
   .modal-content {
+    flex-grow: 15;
     background-color: white;
-    padding: 150px;
+    /*padding: 150px;*/
     border-radius: 7px;
     margin-right: 10px;
     margin-top: 35px;
     position: relative; 
-    /*max-width: 500px;*/ 
-    text-align: center;
-    width:100vw;
-    height:60vh;
-    /*width:500px;*/
-    /*flex-direction: column;*/
+    width: 35vw !important;
+    height: 70vh;
+    max-width: 600px;
+    max-height: 600px;
   }
-  .modal-content content{
+  /*.modal-content content{
     padding: 500px;
-    width:50vw;
-  }
-  .modal-content .auth-container{
-    padding-top: 0;
-    padding-left: 4.0em;
-    padding-right:5.0em;
     width:100vw;
+  }*/
+  .modal-content .auth-container{
+    padding-top: 50px;
+    padding-left: 3.0em;
+    padding-right:3.0em;
+    padding-bottom: 0;
+    margin-right: 50px;
+    margin-top: 40px;
+    margin-left: 80px;
+    padding: 1.0em;
+    width:30vw;
+    align-items: center;
   }
   
   .modal-content span {
@@ -162,8 +166,8 @@ background:#ddd;
     cursor: pointer;
     padding:0;
     color:#ddd;
-    right:20px;
-    top:10px;
+    right:30px;
+    top:30px;
   }
 
   
