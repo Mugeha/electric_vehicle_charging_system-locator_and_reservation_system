@@ -136,3 +136,50 @@ exports.verifyOtpAndResetPassword = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+// Protected routes (require authentication)
+exports.setFavorites = async (req, res) => {
+  const { stationId } = req.body;
+
+  const userId = req.params.userId;
+  // console.log(`stationId: ${stationId}, userId: ${userId}`);
+  try {
+    const user = await User.findById(userId);
+    if (!user)
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+
+    const isFavorite = user.favorites.includes(stationId);
+
+    if (isFavorite) {
+      // Remove station from favorites
+      user.favorites.pull(stationId);
+    } else {
+      // Add station to favorites
+      user.favorites.push(stationId);
+    }
+
+    await user.save();
+    res.json({ success: true, favoriteStations: user.favorites });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+// Route to get all favorite stations for a user
+exports.getFavorites = async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    const user = await User.findById(userId).populate("favorites"); // Populate favorite station details if necessary
+    if (!user)
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+
+    res.json({ success: true, favorites: user.favorites });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};

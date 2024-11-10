@@ -1,18 +1,29 @@
-// In your backend, e.g., Express route
+// Example Express routes
 const express = require('express');
 const router = express.Router();
-const FavoriteStation = require('./models/FavoriteStations'); // MongoDB model for favorites
+const { checkAuth } = require('./middleware/auth'); // Middleware to check if user is authenticated
+const Favorite = require('./models/Favorite'); // Assuming a 'Favorite' model exists
 
-// Endpoint to add a station to favorites
-router.post('/favoriteStations', async (req, res) => {
-  const { stationId } = req.body;
-  const userId = req.user.id; // Assuming user is authenticated
-
+// Get favorite stations for a logged-in user
+router.get('/api/favorites', checkAuth, async (req, res) => {
   try {
-    const favorite = await FavoriteStation.create({ userId, stationId });
-    res.status(201).json(favorite);
+    const userId = req.user.id; // Assuming user ID is stored in req.user after authentication
+    const favorites = await Favorite.find({ userId }); // Query to get the user's favorite stations
+    res.json(favorites);
   } catch (error) {
-    res.status(500).json({ error: 'Error adding favorite station' });
+    res.status(500).json({ message: 'Error fetching favorite stations' });
+  }
+});
+
+// Remove a station from favorites
+router.delete('/api/favorites/:stationId', checkAuth, async (req, res) => {
+  try {
+    const { stationId } = req.params;
+    const userId = req.user.id; // Assuming user ID is stored in req.user after authentication
+    await Favorite.deleteOne({ userId, stationId }); // Remove the station from the user's favorites
+    res.json({ message: 'Station removed from favorites' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error removing station from favorites' });
   }
 });
 

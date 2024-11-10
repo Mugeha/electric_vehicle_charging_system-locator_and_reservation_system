@@ -1,0 +1,43 @@
+.favorite-stations-container {
+  color: black;
+  padding: 20px;
+  text-align: center;
+}
+h2 {
+  color: black;
+}
+.favorite-stations-list {
+  list-style: none;
+  padding: 0;
+}
+
+.favorite-station-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-block-end: 1px solid #ccc;
+}
+
+.favorite-station-item h3 {
+  margin: 0;
+}
+
+.favorite-station-item p {
+  margin: 5px 0;
+}
+
+.unfavorite-button {
+  background-color: #fff;
+  border: 1px solid red;
+  color: red;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.unfavorite-button:hover {
+  background-color: red;
+  color: white;
+}

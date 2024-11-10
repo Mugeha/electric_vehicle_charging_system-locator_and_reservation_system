@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import "./Auth.css"; // Assuming you save the above CSS in a file named Auth.css
 import "../Header.css";
 
-
 const Login = ({ authType, onClose, onChangeAuthType }) => {
   const [isLogin, setIsLogin] = useState(authType === "login");
   const [email, setEmail] = useState("");
@@ -25,7 +24,7 @@ const Login = ({ authType, onClose, onChangeAuthType }) => {
       );
       setMessage("Login successful!");
       localStorage.setItem("token", response.data.token);
-      navigate("/dashboard");
+      navigate("/");
       onClose();
     } catch (error) {
       setMessage(
@@ -46,57 +45,54 @@ const Login = ({ authType, onClose, onChangeAuthType }) => {
 
   return (
     <>
-<div className="auth-container">
-  <h2>Login</h2>
-      <form onSubmit={handleLogin}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit">Login</button>
-      </form>
-      {message && <p className="p">{message}</p>}
-      <p className="p" onClick={goToSignup}>
-        Don't have an account?
-        <i
-          style={{
-            color: "#007bff",
-            textDecoration: "underline",
-            cursor: "pointer",
-          }}
-        >
-          {" "}
-          Signup here
-        </i>
-      </p>
-      <p className="p" onClick={goToForgotPassword}>
-        Forgot your password?
-        <i
-          style={{
-            color: "#007bff",
-            textDecoration: "underline",
-            cursor: "pointer",
-          }}
-        >
-          {" "}
-          Reset Password
-        </i>
-      </p>
-  </div>
-      
-    
+      <div className="auth-container">
+        <h2>Login</h2>
+        <form onSubmit={handleLogin}>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <button type="submit">Login</button>
+        </form>
+        {message && <p className="p">{message}</p>}
+        <p className="p" onClick={goToSignup}>
+          Don't have an account?
+          <i
+            style={{
+              color: "#007bff",
+              textDecoration: "underline",
+              cursor: "pointer",
+            }}
+          >
+            {" "}
+            Signup here
+          </i>
+        </p>
+        <p className="p" onClick={goToForgotPassword}>
+          Forgot your password?
+          <i
+            style={{
+              color: "#007bff",
+              textDecoration: "underline",
+              cursor: "pointer",
+            }}
+          >
+            {" "}
+            Reset Password
+          </i>
+        </p>
+      </div>
     </>
-    
   );
 };
 

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode"; // Correct
 import Login from "./Login";
 import Signup from "./Signup";
 import ForgotPassword from "./ForgotPassword";
+// import FavoriteStations from "./FavoriteStations";
 import ResetPassword from "./ResetPassword";
 import AuthModal from "./AuthModal";
 import Map from "./Map";
@@ -22,6 +24,8 @@ const HomePage = () => {
   const [authType, setAuthType] = useState("login"); // Default to 'login'
   const [dropdownVisible, setDropdownVisible] = useState(false); // Manage dropdown visibility
   const [userLoggedIn, setUserLoggedIn] = useState(false); // New state to track login
+
+  const navigate = useNavigate();
 
   const openModal = (type) => {
     setAuthType(type);
@@ -66,6 +70,14 @@ const HomePage = () => {
             onChangeAuthType={setAuthType}
           />
         );
+      // case "favorites":
+      //   return (
+      //     <FavoriteStations
+      //       authType={authType}
+      //       onClose={closeModal}
+      //       onChangeAuthType={setAuthType}
+      //     />
+      //   );
       default:
         return null;
     }
@@ -88,9 +100,9 @@ const HomePage = () => {
         setUserLoggedIn(false);
       }
     }
-  }, [])
+  }, []);
+
   const getUserName = () => {
-   
     if (token) {
       try {
         const decodedToken = jwtDecode(token);
@@ -111,10 +123,17 @@ const HomePage = () => {
     if (action === "logout") {
       localStorage.removeItem("token"); // Clear token on logout
       window.location.reload(); // Reload to reflect changes
+    } else if (action === "favorites") {
+      navigate("/favorites"); // Navigate to favorites
+    } else if (action === "account") {
+      navigate("/account"); // Navigate to account details
+    } else if (action === "reservations") {
+      navigate("/reservations"); // Navigate to reservations
     }
   };
-   // Function to trigger auth modal when necessary
-   const handleAccessProtectedFeature = () => {
+
+  // Function to trigger auth modal when necessary
+  const handleAccessProtectedFeature = () => {
     if (!userLoggedIn) {
       openModal("login"); // Show login modal if user is not logged in
     }
@@ -139,22 +158,32 @@ const HomePage = () => {
                   onClick={() => setDropdownVisible(!dropdownVisible)}
                   style={{ cursor: "pointer" }} // Add cursor style
                 >
-                  <FaUser style={{ marginRight: "9px", marginTop: "2px" }} /> {/* User Icon */}
+                  <FaUser style={{ marginRight: "9px", marginTop: "2px" }} />{" "}
+                  {/* User Icon */}
                   Welcome {userName.toUpperCase()}
                   <FaCaretDown style={{ marginLeft: "5px" }} />{" "}
                   {/* Dropdown Icon */}
                 </span>
                 {dropdownVisible && (
-                  <>
-                
                   <div className="dropdown-menu">
-                  <h4 style={{color: "black", marginLeft: "15px", opacity: "0.4"}}>PERSONAL AREA</h4>
+                    <h4
+                      style={{
+                        color: "black",
+                        marginLeft: "15px",
+                        opacity: "0.4",
+                      }}
+                    >
+                      PERSONAL AREA
+                    </h4>
                     <ul>
                       <li onClick={() => handleDropdownItemClick("account")}>
                         <FaCog style={{ marginRight: "5px" }} /> Account Details
                       </li>
-                      <li onClick={() => handleDropdownItemClick("payment")}>
-                        <FaCreditCard style={{ marginRight: "5px" }} /> My Reservations
+                      <li
+                        onClick={() => handleDropdownItemClick("reservations")}
+                      >
+                        <FaCreditCard style={{ marginRight: "5px" }} /> My
+                        Reservations
                       </li>
                       <li onClick={() => handleDropdownItemClick("favorites")}>
                         <FaHeart style={{ marginRight: "5px" }} /> Favorite
@@ -165,8 +194,6 @@ const HomePage = () => {
                       </li>
                     </ul>
                   </div>
-                  </>
-                  
                 )}
               </li>
             ) : (
@@ -185,7 +212,7 @@ const HomePage = () => {
           <AuthModal closeModal={closeModal}>{renderAuthComponent()}</AuthModal>
         )}
       </div>
-      <Map onAccessProtectedFeature={handleAccessProtectedFeature}/>
+      <Map onAccessProtectedFeature={handleAccessProtectedFeature} />
     </>
   );
 };
