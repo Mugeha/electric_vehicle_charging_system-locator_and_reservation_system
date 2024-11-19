@@ -1,0 +1,106 @@
+/* Profile section styles */
+.profile-section {
+    margin-top: 30px;
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+  }
+  
+  .profile-section h3 {
+    margin-bottom: 10px;
+  }
+  
+  .profile-section .field {
+    margin-bottom: 15px;
+  }
+  
+  .profile-section .password {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .edit-password-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .delete-account-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .delete-account-btn:hover {
+    background: #c82333;
+  }
+  .bluish{
+    height: 200px;
+    background-color: #1c2038;
+  }
+  .bluish h1{
+padding-left: 40px;
+padding-top: 20px;
+  }
+  .whitish{
+    height: 600px;
+    background-color: #ddd;
+  }
+  .relative {
+    position: relative;
+    /* height: 100%; */
+   /* height: 100vh; */
+   height: auto;
+   /* overflow-y: auto; */
+  }
+  .abs{
+    position: absolute;
+    top: 200px;
+    left: 130px;
+    width: 80vw;
+    height: 900px;
+    /* height: 100vh;
+   max-height: auto; */
+ margin: auto;
+ /* overflow-x: auto;   */
+ overflow-y: auto;
+    background-color: white;
+    border-radius: 5px;
+    display: flex;
+  } 
+  
+  .links {
+    width: 30%;
+    border-right: 1px solid #ddd; /* Vertical line */
+  } 
+
+  .links ul{
+    list-style: none;
+    gap: 2rem;
+    color: black;
+    padding: 7px;
+  }
+  .links ul li{
+    padding: 3px 0 13px 6px;
+    color: #333;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  .links ul li:hover {
+    color: #29d183; /* Highlight on hover */
+  }
+  .content-section {
+    width: 70%; /* 70% of the width */
+    padding: 20px;
+    background-color: #fff;
+    overflow-y: auto;
+  }
+
+  

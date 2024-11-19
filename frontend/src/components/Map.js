@@ -9,7 +9,7 @@ import MapSearch from "./SearchBar";
 import axios from "axios";
 import Modal from "react-modal";
 
-import { jwtDecode } from "jwt-decode"; // Correct
+import  { jwtDecode } from "jwt-decode"; // Correct
 import carChargingImage from "./icons/carcharging.jpeg";
 import directionsIcon from "./icons/directionsicon-removebg-preview.png";
 import evcharger from "./icons/evchargericon-removebg-preview.png";
@@ -108,6 +108,10 @@ function Map() {
     const { name, value } = e.target;
     setNewStation((prevState) => ({ ...prevState, [name]: value }));
   };
+   // Function to handle station click
+  const handleStationClick = (station) => {
+    setSelectedStation(station); // Update the state with the clicked station's data
+  };
   const handleFavorite = (station) => {
     console.log(`before ${station.isFavorite}`);
     console.log(`stationId: ${station._id}`);
@@ -119,7 +123,8 @@ function Map() {
         `http://localhost:5000/api/users/favorites/${userId}`,
         { stationId: station._id },
         {
-          headers: { Authorization: token },
+          headers: { Authorization: `Bearer ${token}` },
+
         }
       )
       .then((response) => {
@@ -165,50 +170,17 @@ function Map() {
         onLoad={(map) => map.setCenter(mapCenter)}
       >
         {/* Map filtered stations with markers */}
-        {filteredStations.map((station, index) => (
-          <Marker
-            key={station._id}
-            position={{ lat: station.position[0], lng: station.position[1] }}
-            onClick={() => {
-              const token = localStorage.getItem("token");
+        {filteredStations.map((station) => (
+  <Marker
+    key={station._id}
+    position={{
+      lat: station.position[0],
+      lng: station.position[1],
+    }}
+    onClick={() => handleStationClick(station)} // Directly pass station data
+  />
+))}
 
-              // Ensure token exists and is valid
-              if (!token) {
-                console.error("No token found");
-                return;
-              }
-
-              axios
-                .get(`http://localhost:5000/api/users/favorites/${userId}`, {
-                  headers: { Authorization: `Bearer ${token}` },
-                })
-                .then((response) => {
-                  console.log(response.data.favorites);
-                  const userfavs = response.data.favorites;
-
-                  // Update the stations list with isFavorite property
-                  const updatedStations = stations.map((s) => {
-                    // Check if the station is in the user's favorites
-                    const isFavorite = userfavs.some(
-                      (fav) => fav._id === s._id
-                    );
-
-                    // Return a new station object with the `isFavorite` property added
-                    return { ...s, isFavorite };
-                  });
-
-                  console.log(`station: ${updatedStations[0].isFavorite}`);
-                  // Update the stations state (or any other state that holds the list of stations)
-                  setSelectedStation(updatedStations[0]);
-                })
-                .catch((error) =>
-                  console.error("Error checking favorite status:", error)
-                );
-              console.log(`station: ${station.isFavorite}`);
-              // Set the selected station to display details or highlight
-            }}
-          />
-        ))}
 
         {/* Selected station info window */}
         {selectedStation && (

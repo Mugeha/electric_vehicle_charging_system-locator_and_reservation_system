@@ -4,6 +4,7 @@ import { jwtDecode } from "jwt-decode"; // Correct
 import Login from "./Login";
 import Signup from "./Signup";
 import ForgotPassword from "./ForgotPassword";
+import AccountDetailsPage from "./AccountDetailsPage";
 // import FavoriteStations from "./FavoriteStations";
 import ResetPassword from "./ResetPassword";
 import AuthModal from "./AuthModal";
@@ -123,14 +124,15 @@ const HomePage = () => {
     if (action === "logout") {
       localStorage.removeItem("token"); // Clear token on logout
       window.location.reload(); // Reload to reflect changes
-    } else if (action === "favorites") {
-      navigate("/favorites"); // Navigate to favorites
-    } else if (action === "account") {
-      navigate("/account"); // Navigate to account details
-    } else if (action === "reservations") {
-      navigate("/reservations"); // Navigate to reservations
-    }
+    } else  {
+      navigate("/account", { state: { selectedSection: action } }); // Navigate to favorites
+    // } else if (action === "account") {
+    //   navigate("/account"); // Navigate to account details
+    // } else if (action === "reservations") {
+    //   navigate("/reservations"); // Navigate to reservations
+    // }
   };
+};
 
   // Function to trigger auth modal when necessary
   const handleAccessProtectedFeature = () => {
