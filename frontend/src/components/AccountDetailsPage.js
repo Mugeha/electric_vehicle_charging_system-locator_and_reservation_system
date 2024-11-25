@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { useLocation } from "react-router-dom";
 import AccountDetails from "./Account";
-import Reservations from "./Reservations";
+import MyReservations from "./Reservation";
 import FavoriteStations from "./FavoriteStations";
 import MyCharges from "./MyCharges";
 import { Link } from 'react-router-dom'; 
@@ -16,6 +16,8 @@ import { FaUser, FaCaretDown, FaCog, FaSignOutAlt, FaCreditCard, FaHeart, FaBolt
 
 const AccountDetailsPage = () => {
   const [userLoggedIn, setUserLoggedIn] = useState(false);
+  // const [showReservationModal, setShowReservationModal] = useState(false);
+  const [selectedStationId, setSelectedStationId] = useState("");
   const [userName, setUserName] = useState(null);
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [profilePicture, setProfilePicture] = useState(null); // State for profile picture
@@ -81,6 +83,20 @@ const AccountDetailsPage = () => {
         reader.readAsDataURL(file);
       }
     };
+    const handleStationSelect = (stationId) => {
+      setSelectedStationId(stationId); // Store the selected station ID
+      console.log("Selected Station ID:", stationId);
+    };
+     // Function to open the reservation modal
+  const openReservationModal = (stationId) => {
+    setSelectedStationId(stationId);
+    setShowReservationModal(true);
+  };
+
+  // Function to close the reservation modal
+  const closeReservationModal = () => {
+    setShowReservationModal(false);
+  };
 
 // const handleItemClick = (action) => {
 //   if (action === "logout") {
@@ -175,7 +191,7 @@ const AccountDetailsPage = () => {
           <div className="content-section">
     {/* Render the selected content dynamically */}
     {selectedOption === "account" && <AccountDetails />}
-    {selectedOption === "reservations" && <Reservations />}
+    {selectedOption === "reservations" && <MyReservations stationId={selectedStationId} />}
     {selectedOption === "favorites" && <FavoriteStations />}
   </div>
     </div>

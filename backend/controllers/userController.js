@@ -28,7 +28,9 @@ exports.signup = async (req, res) => {
     const payload = { user: { id: user._id } };
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
       expiresIn: "1h",
+      
     });
+    console.log("Generated Token Payload:", payload);
 
     res.status(201).json({ token });
     console.log(req.body); // Debugging output

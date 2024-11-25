@@ -5,10 +5,11 @@ import {
   InfoWindow,
   useLoadScript,
 } from "@react-google-maps/api";
+import { useNavigate } from 'react-router-dom';
 import MapSearch from "./SearchBar";
 import axios from "axios";
 import Modal from "react-modal";
-
+import Reservation from "./Reservations";
 import  { jwtDecode } from "jwt-decode"; // Correct
 import carChargingImage from "./icons/carcharging.jpeg";
 import directionsIcon from "./icons/directionsicon-removebg-preview.png";
@@ -24,10 +25,16 @@ function Map() {
   const [mapCenter, setMapCenter] = useState(mapOptions.center);
   const [stations, setStations] = useState([]);
   const [selectedStation, setSelectedStation] = useState(null);
+  const [selectedStationId, setSelectedStationId] = useState("");
   const [filter, setFilter] = useState("All");
 
   const [showAddStationModal, setShowAddStationModal] = useState(false);
+  const [sselectedStation, ssetSelectedStation] = useState(null);
+  const [showReservation, setShowReservation] = useState(false);
   // or from context: const { userId } = useContext(AuthContext);
+
+
+  const navigate = useNavigate();
 
   const [newStation, setNewStation] = useState({
     name: "",
@@ -80,6 +87,19 @@ function Map() {
     window.open(directionsUrl, "_blank"); // Open directions in a new tab
   };
 
+  const handleClick = () => {
+    setShowReservation(true); // Navigate to the Reservation component
+    // setSelectedStationId(stationId); 
+    // console.log("Selected Station ID:", stationId);
+  };
+  const handleCloseModal = () => {
+    setShowReservation(false);
+  };
+
+  const handleStationSelect = (stationId) => {
+    setSelectedStationId(stationId); // Store the selected station ID
+    console.log("Selected Station ID:", stationId);
+  };
   // Filtered stations based on the selected filter
   const filteredStations =
     filter === "All"
@@ -300,6 +320,7 @@ function Map() {
               </button>
             </div>
             <button
+             onClick={handleClick}
               style={{
                 width: "100%",
                 padding: "10px",
@@ -315,6 +336,29 @@ function Map() {
             >
               Make Reservation
             </button>
+            {showReservation && (
+        <div
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            width:"50vw",
+            margin: "auto",
+            height: "70vh",
+            transform: "translate(-50%, -50%)",
+            backgroundColor: "#fff",
+            padding: "20px",
+            borderRadius: "8px",
+            boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+          }}
+        >
+          <Reservation
+            station={sselectedStation}
+            onClose={handleCloseModal}
+            stationId={selectedStationId} 
+          />
+        </div>
+      )}
           </Modal>
         )}
         {/* Add Station Modal */}
@@ -457,7 +501,11 @@ function Map() {
           </form>
         </Modal>
 
-        <MapSearch setMapCenter={setMapCenter} />
+        <div>
+      <MapSearch setMapCenter={setMapCenter} onStationSelect={() => handleStationSelect(selectedStationId)} />
+      {/* Use selectedStationId as needed */}
+      {selectedStationId && <p>Selected Station ID: {selectedStationId}</p>}
+    </div>
       </GoogleMap>
     </div>
   );
