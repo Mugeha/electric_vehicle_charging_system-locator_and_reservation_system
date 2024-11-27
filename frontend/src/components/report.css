@@ -1,0 +1,15 @@
+.report p strong{
+    color: black;
+    
+}
+.report {
+    height: 150%;
+}
+.report h3{
+    color:black;
+
+}
+.report ul{
+    border-radius: 1px solid black;
+    list-style: none;
+}

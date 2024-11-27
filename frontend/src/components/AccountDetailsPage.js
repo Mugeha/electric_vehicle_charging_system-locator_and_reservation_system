@@ -18,7 +18,7 @@ const AccountDetailsPage = () => {
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   // const [showReservationModal, setShowReservationModal] = useState(false);
   const [selectedStationId, setSelectedStationId] = useState("");
-  const [userName, setUserName] = useState(null);
+  const [userName, setUserName] = useState("");
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [profilePicture, setProfilePicture] = useState(null); // State for profile picture
   const location = useLocation();
@@ -54,11 +54,11 @@ const AccountDetailsPage = () => {
       localStorage.removeItem("token"); // Clear token on logout
       window.location.reload(); // Reload to reflect changes
     } else if (action === "favorites") {
-      navigate("/favorites"); // Navigate to favorites
+      navigate("/account"); // Navigate to favorites
     } else if (action === "account") {
       navigate("/account"); // Navigate to account details
     } else if (action === "reservations") {
-      navigate("/reservations"); // Navigate to reservations
+      navigate("/account"); // Navigate to reservations
     }
   };
 
@@ -193,6 +193,7 @@ const AccountDetailsPage = () => {
     {selectedOption === "account" && <AccountDetails />}
     {selectedOption === "reservations" && <MyReservations stationId={selectedStationId} />}
     {selectedOption === "favorites" && <FavoriteStations />}
+    {selectedOption === "mycharges" && <MyCharges />}
   </div>
     </div>
     </>

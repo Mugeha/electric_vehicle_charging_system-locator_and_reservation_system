@@ -137,7 +137,7 @@ background:#ddd;
     margin-top: 35px;
     position: relative; 
     width: 35vw !important;
-    height: 70vh;
+    height: 100vh;
     max-width: 600px;
     max-height: 600px;
   }
@@ -151,7 +151,7 @@ background:#ddd;
     padding-right:3.0em;
     padding-bottom: 0;
     margin-right: 50px;
-    margin-top: 40px;
+    margin-top: 20px;
     margin-left: 80px;
     padding: 1.0em;
     width:30vw;

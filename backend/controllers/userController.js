@@ -8,9 +8,9 @@ require("dotenv").config();
 // Signup logic
 exports.signup = async (req, res) => {
   console.log(req.body);
-  const { name, email, password } = req.body;
+  const { userName, name, email, password } = req.body;
 
-  if (!name || !email || !password) {
+  if (!userName || !name || !email || !password) {
     return res.status(400).json({ message: "All fields are required" });
   }
 
@@ -22,19 +22,19 @@ exports.signup = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    user = new User({ name, email, password: hashedPassword });
+    user = new User({ userName, name, email, password: hashedPassword });
     await user.save();
 
     const payload = { user: { id: user._id } };
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
       expiresIn: "1h",
-      
     });
     console.log("Generated Token Payload:", payload);
 
     res.status(201).json({ token });
     console.log(req.body); // Debugging output
   } catch (err) {
+    console.log(`server error ${err}`);
     res.status(500).json({ message: "Server error" });
   }
 };
@@ -140,48 +140,48 @@ exports.verifyOtpAndResetPassword = async (req, res) => {
 };
 
 // Protected routes (require authentication)
-exports.setFavorites = async (req, res) => {
-  const { stationId } = req.body;
+// exports.setFavorites = async (req, res) => {
+//   const { stationId } = req.body;
 
-  const userId = req.params.userId;
-  // console.log(`stationId: ${stationId}, userId: ${userId}`);
-  try {
-    const user = await User.findById(userId);
-    if (!user)
-      return res
-        .status(404)
-        .json({ success: false, message: "User not found" });
+//   const userId = req.params.userId;
+//   // console.log(`stationId: ${stationId}, userId: ${userId}`);
+//   try {
+//     const user = await User.findById(userId);
+//     if (!user)
+//       return res
+//         .status(404)
+//         .json({ success: false, message: "User not found" });
 
-    const isFavorite = user.favorites.includes(stationId);
+//     const isFavorite = user.favorites.includes(stationId);
 
-    if (isFavorite) {
-      // Remove station from favorites
-      user.favorites.pull(stationId);
-    } else {
-      // Add station to favorites
-      user.favorites.push(stationId);
-    }
+//     if (isFavorite) {
+//       // Remove station from favorites
+//       user.favorites.pull(stationId);
+//     } else {
+//       // Add station to favorites
+//       user.favorites.push(stationId);
+//     }
 
-    await user.save();
-    res.json({ success: true, favoriteStations: user.favorites });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
-};
+//     await user.save();
+//     res.json({ success: true, favoriteStations: user.favorites });
+//   } catch (error) {
+//     res.status(500).json({ success: false, message: error.message });
+//   }
+// };
 
-// Route to get all favorite stations for a user
-exports.getFavorites = async (req, res) => {
-  const userId = req.params.userId;
+// // Route to get all favorite stations for a user
+// exports.getFavorites = async (req, res) => {
+//   const userId = req.params.userId;
 
-  try {
-    const user = await User.findById(userId).populate("favorites"); // Populate favorite station details if necessary
-    if (!user)
-      return res
-        .status(404)
-        .json({ success: false, message: "User not found" });
+//   try {
+//     const user = await User.findById(userId).populate("favorites"); // Populate favorite station details if necessary
+//     if (!user)
+//       return res
+//         .status(404)
+//         .json({ success: false, message: "User not found" });
 
-    res.json({ success: true, favorites: user.favorites });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
-};
+//     res.json({ success: true, favorites: user.favorites });
+//   } catch (error) {
+//     res.status(500).json({ success: false, message: error.message });
+//   }
+// };

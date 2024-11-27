@@ -10,6 +10,7 @@ import MapSearch from "./SearchBar";
 import axios from "axios";
 import Modal from "react-modal";
 import Reservation from "./Reservations";
+import { FaHeart, FaRegHeart } from "react-icons/fa"; // Font Awesome Icons
 import  { jwtDecode } from "jwt-decode"; // Correct
 import carChargingImage from "./icons/carcharging.jpeg";
 import directionsIcon from "./icons/directionsicon-removebg-preview.png";
@@ -27,9 +28,10 @@ function Map() {
   const [selectedStation, setSelectedStation] = useState(null);
   const [selectedStationId, setSelectedStationId] = useState("");
   const [filter, setFilter] = useState("All");
+  const [selectedStationName, setSelectedStationName] = useState("");
 
   const [showAddStationModal, setShowAddStationModal] = useState(false);
-  const [sselectedStation, ssetSelectedStation] = useState(null);
+  // const [sselectedStation, ssetSelectedStation] = useState(null);
   const [showReservation, setShowReservation] = useState(false);
   // or from context: const { userId } = useContext(AuthContext);
 
@@ -57,6 +59,7 @@ function Map() {
     axios
       .get("http://localhost:5000/api/stations")
       .then((response) => setStations(response.data))
+      // console.log(response.data)
       .catch((error) => console.error("Error fetching stations:", error));
 
     // Fetch user favorites
@@ -88,10 +91,16 @@ function Map() {
   };
 
   const handleClick = () => {
-    setShowReservation(true); // Navigate to the Reservation component
-    // setSelectedStationId(stationId); 
-    // console.log("Selected Station ID:", stationId);
+    if (selectedStation) {
+      setSelectedStationId(selectedStation._id); // Set the ID of the currently selected station
+      setSelectedStationName(selectedStation.name); // Set the name of the currently selected station
+      setShowReservation(true); // Open the reservation modal
+    } else {
+      console.error("No station selected for reservation.");
+    }
   };
+  
+  
   const handleCloseModal = () => {
     setShowReservation(false);
   };
@@ -100,6 +109,10 @@ function Map() {
     setSelectedStationId(stationId); // Store the selected station ID
     console.log("Selected Station ID:", stationId);
   };
+  // const ssselectedStation = stations.find(
+  //   (station) => station._id === selectedStationId
+  // );
+  // console.log("Selected Station (derived):", ssselectedStation);
   // Filtered stations based on the selected filter
   const filteredStations =
     filter === "All"
@@ -133,32 +146,35 @@ function Map() {
     setSelectedStation(station); // Update the state with the clicked station's data
   };
   const handleFavorite = (station) => {
-    console.log(`before ${station.isFavorite}`);
-    console.log(`stationId: ${station._id}`);
     const token = localStorage.getItem("token");
-    console.log(`token 2:${token}`);
-
+    if (!token) {
+      alert("Please log in to favorite stations.");
+      return;
+    }
+  
     axios
       .post(
-        `http://localhost:5000/api/users/favorites/${userId}`,
-        { stationId: station._id },
+        `http://localhost:5000/api/favorites/${station._id}`, // Send the stationId to the backend
+        {},
         {
-          headers: { Authorization: `Bearer ${token}` },
-
+          headers: {
+            Authorization: `Bearer ${token}`, // Include the token for authentication
+          },
         }
       )
       .then((response) => {
+        // Toggle the favorite status in the local state
         setStations(
           stations.map((s) =>
             s._id === station._id ? { ...s, isFavorite: !s.isFavorite } : s
           )
         );
       })
-      .catch((error) =>
-        console.error("Error updating favorite status:", error)
-      );
-    console.log(`after${station.isFavorite}`);
+      .catch((error) => {
+        console.error("Error updating favorite status:", error);
+      });
   };
+  
   if (!isLoaded) return <div>Loading Map...</div>;
 
   return (
@@ -268,7 +284,12 @@ function Map() {
                   color: "white",
                 }}
               >
-                {selectedStation.isFavorite ? "❤️" : "🤍"}
+               {selectedStation.isFavorite ? (
+        <FaHeart color="red" size={20} />
+      ) : (
+        <FaRegHeart color="gray" size={20} />
+      )}
+                
               </button>
             </div>
 
@@ -353,9 +374,11 @@ function Map() {
           }}
         >
           <Reservation
-            station={sselectedStation}
+            station={selectedStation}
             onClose={handleCloseModal}
             stationId={selectedStationId} 
+            // stationName={selectedStation.name}
+            stationName={selectedStationName}
           />
         </div>
       )}
@@ -502,7 +525,7 @@ function Map() {
         </Modal>
 
         <div>
-      <MapSearch setMapCenter={setMapCenter} onStationSelect={() => handleStationSelect(selectedStationId)} />
+      <MapSearch setMapCenter={setMapCenter} onStationSelect={handleStationSelect} />
       {/* Use selectedStationId as needed */}
       {selectedStationId && <p>Selected Station ID: {selectedStationId}</p>}
     </div>

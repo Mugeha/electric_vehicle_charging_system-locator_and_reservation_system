@@ -1,0 +1,25 @@
+.reserve-list{
+    color: black;
+}
+.stationsReserved {
+    height: 150%;
+   
+}
+.stationsReserved ul li p{
+    color: black;
+}
+ .reserve-list ul li {
+    list-style: none;
+    color: black;
+ }
+ .reserve-list li{
+    list-style: none;
+    color: black;
+ }
+ div p{
+    color: black;
+ }
+ .reserve-list li p strong{
+    color: black;
+ }
+
