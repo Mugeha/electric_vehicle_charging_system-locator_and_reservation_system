@@ -1,0 +1,1 @@
+The system enables users to locate electric vehicle charging stations, view their availability and operational status, and make real-time reservations. I utilized React for the frontend and Node.js with MongoDB for the backend, ensuring a seamless user experience and dynamic updates.
