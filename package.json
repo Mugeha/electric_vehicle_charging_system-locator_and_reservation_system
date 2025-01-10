@@ -20,7 +20,9 @@
   },
   "homepage": "https://github.com/Mugeha/ev#readme",
   "dependencies": {
-    "@craco/craco": "^7.1.0",
     "react-scripts": "^5.0.1"
+  },
+  "devDependencies": {
+    "@craco/craco": "^7.1.0"
   }
 }
