@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.d146f2f8.css",
+    "main.js": "/static/js/main.3297fe92.js",
+    "static/media/ev-removebg-preview.png": "/static/media/ev-removebg-preview.dab2b29f22e2c488196a.png",
+    "static/media/evchargericon-removebg-preview.png": "/static/media/evchargericon-removebg-preview.b000d1e1e8dc3b07d7cd.png",
+    "static/media/carcharging.jpeg": "/static/media/carcharging.440bc69cf7c96a54325c.jpeg",
+    "index.html": "/index.html",
+    "main.d146f2f8.css.map": "/static/css/main.d146f2f8.css.map",
+    "main.3297fe92.js.map": "/static/js/main.3297fe92.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d146f2f8.css",
+    "static/js/main.3297fe92.js"
+  ]
+}

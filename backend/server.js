@@ -1,5 +1,7 @@
 require("dotenv").config();
 const express = require("express");
+
+const path = require('path');
 const mongoose = require("mongoose");
 const cors = require("cors");
 const userRoutes = require("./routes/userRoutes");
@@ -13,6 +15,14 @@ const updateRoutes = require("./routes/updateRoutes");
 // const favoriteRoutes = require("./routes/FavstationRoutes");
 
 const app = express();
+
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, 'public')));
+
+// For any route, return the index.html file to allow React to handle routing
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 // Middleware
 app.use(express.json());

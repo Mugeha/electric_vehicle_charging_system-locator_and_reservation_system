@@ -3,16 +3,18 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "react-scripts start"
-  },
+ "scripts": {
+  "start": "craco start",
+  "build": "craco build",
+  "test": "craco test"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@react-google-maps/api": "^2.20.3",
     "axios": "^1.7.7",
+    "build": "^0.1.4",
     "json2csv": "^6.0.0-alpha.2",
     "jwt-decode": "^4.0.0",
     "leaflet": "^1.9.4",
@@ -36,5 +38,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }
