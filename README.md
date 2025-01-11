@@ -114,3 +114,21 @@ Copy code
 git commit -m "Add your message"
 git push origin feature/your-feature-name
 Open a Pull Request.
+
+
+🎨 Screenshots
+Home Page:
+An intuitive map interface for searching EV stations.
+
+
+Reservation System:
+Effortlessly reserve a station and manage bookings.
+
+Reports:
+Generate detailed reports on usage and reservations.
+
+📌 Roadmap
+ Add more global search functionality.
+ Include charging cost estimation.
+ Real-time notifications for station updates.
+ AI-based station recommendations based on usage history.
