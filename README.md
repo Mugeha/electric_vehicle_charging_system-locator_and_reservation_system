@@ -72,7 +72,7 @@ bash
 Copy code
 # Start backend
 cd backend
-npm start
+npm run dev
 
 # Start frontend
 cd ../frontend
