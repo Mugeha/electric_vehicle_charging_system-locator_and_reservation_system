@@ -49,7 +49,7 @@ bash
 Copy code
 # For backend
 cd backend
-npm install
+npm run dev
 
 # For frontend
 cd ../frontend
