@@ -124,6 +124,7 @@ An intuitive map interface for searching EV stations.
 
 Reservation System:
 Effortlessly reserve a station and manage bookings.
+![Screenshot 2024-11-19 225032](./assets/sn4.png)
 
 Reports:
 Generate detailed reports on usage and reservations.
