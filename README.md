@@ -129,9 +129,15 @@ Secure Authentication:
 Reservation System:
 Effortlessly reserve a station and manage bookings.
 ![Screenshot 2024-11-19 225032](./assets/sn4.png)
+Reserve Page
+![Screenshot 2024-11-19 225032](./assets/sn5.png)
+
+Fetching reservations
+![Screenshot 2024-11-19 225032](./assets/sn6.png)
 
 Reports:
 Generate detailed reports on usage and reservations.
+![Screenshot 2024-11-19 225032](./assets/sn7.png)
 
 📌 Roadmap
  Add more global search functionality.
