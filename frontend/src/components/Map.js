@@ -4,6 +4,7 @@ import {
   Marker,
   InfoWindow,
   useLoadScript,
+  useJsApiLoader
 } from "@react-google-maps/api";
 import { useNavigate } from 'react-router-dom';
 import MapSearch from "./SearchBar";
