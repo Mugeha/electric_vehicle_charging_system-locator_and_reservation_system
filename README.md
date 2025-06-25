@@ -47,6 +47,7 @@ Frontend:
 React: For creating an intuitive and dynamic user interface.
 
 Axios: For seamless communication with the backend API.
+
 Toastify: For responsive notifications (errors, successes, etc.).
 Leaflet: For interactive map integration.
 Backend:
