@@ -22,7 +22,7 @@ Real-time reservation tracking with automatic updates.
 
 Allows users to reserve stations, with reservations dynamically stored in their profiles.
 
-📈 Detailed Reports
+###  📈 Detailed Reports
 Generate user-specific reports, including total reservations, total charging duration, and station-specific usage summaries.
 Download reports in CSV format for detailed analysis.
 🔒 Secure User Authentication
