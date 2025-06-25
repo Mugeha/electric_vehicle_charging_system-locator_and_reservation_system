@@ -19,6 +19,7 @@ Displays custom markers for station statuses: Available, Occupied, Not Working, 
 ###  📊 Reservation Management
 
 Real-time reservation tracking with automatic updates.
+
 Allows users to reserve stations, with reservations dynamically stored in their profiles.
 📈 Detailed Reports
 Generate user-specific reports, including total reservations, total charging duration, and station-specific usage summaries.
