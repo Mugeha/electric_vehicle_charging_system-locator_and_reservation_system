@@ -84,8 +84,11 @@ Install dependencies:
 
 **For backend**
 
+```
 cd backend
 npm run dev
+
+```
 
 # For frontend
 cd ../frontend
