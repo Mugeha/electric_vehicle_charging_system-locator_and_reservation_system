@@ -42,7 +42,7 @@ Integrated Toastify for interactive error and success notifications.
 
 ###  🛠️ Tech Stack
 
-Frontend:
+**Frontend:**
 
 React: For creating an intuitive and dynamic user interface.
 
