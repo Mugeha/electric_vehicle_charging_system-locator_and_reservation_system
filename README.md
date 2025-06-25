@@ -62,7 +62,7 @@ JSON Web Tokens (JWT): For secure authentication.
 
 Mongoose: For schema-based MongoDB interaction.
 
-🚀 Installation and Setup
+### 🚀 Installation and Setup
 Prerequisites:
 Node.js (v16 or higher)
 MongoDB instance (local or cloud, e.g., MongoDB Atlas)
