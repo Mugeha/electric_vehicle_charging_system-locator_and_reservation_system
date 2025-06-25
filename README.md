@@ -28,7 +28,7 @@ Generate user-specific reports, including total reservations, total charging dur
 
 Download reports in CSV format for detailed analysis.
 
-🔒 Secure User Authentication
+###  🔒 Secure User Authentication
 Implemented with token-based authentication for secure access to features.
 User sessions are managed efficiently with robust backend handling.
 🎉 User-Friendly Interface
