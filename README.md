@@ -1,5 +1,6 @@
-⚡ EV Station Search and Reservation System
-An intuitive web application that simplifies the process of locating, reserving, and managing EV charging stations. Designed to enhance the user experience for electric vehicle owners, this system combines real-time updates, dynamic reservations, and detailed reports to create a seamless charging experience. 🚗🔌
+##⚡ EV Station Search and Reservation System
+
+An intuitive web application that simplifies the process of locating, reserving, and managing EV charging stations. Designed to enhance the user experience for electric vehicle owners, this system combines real-time updates, dynamic reservations, and detailed reports to create a seamless charging experience. 
 
 🌟 Features
 🔍 EV Station Search
