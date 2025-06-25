@@ -40,7 +40,8 @@ Built with React for a modern and responsive UI.
 
 Integrated Toastify for interactive error and success notifications.
 
-🛠️ Tech Stack
+###  🛠️ Tech Stack
+
 Frontend:
 React: For creating an intuitive and dynamic user interface.
 Axios: For seamless communication with the backend API.
