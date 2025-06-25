@@ -10,11 +10,12 @@ Search for EV stations by location using an interactive map.
 
 View station availability, operational status, power output, and user ratings.
 
-###📍 Real-Time Map Integration
+### 📍 Real-Time Map Integration
 
 Integrated with Leaflet for interactive maps.
 
 Displays custom markers for station statuses: Available, Occupied, Not Working, or No Information.
+
 📊 Reservation Management
 Real-time reservation tracking with automatic updates.
 Allows users to reserve stations, with reservations dynamically stored in their profiles.
