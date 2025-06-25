@@ -35,8 +35,11 @@ Implemented with token-based authentication for secure access to features.
 User sessions are managed efficiently with robust backend handling.
 
 ### 🎉 User-Friendly Interface
+
 Built with React for a modern and responsive UI.
+
 Integrated Toastify for interactive error and success notifications.
+
 🛠️ Tech Stack
 Frontend:
 React: For creating an intuitive and dynamic user interface.
