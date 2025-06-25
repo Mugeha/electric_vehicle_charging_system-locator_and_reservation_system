@@ -2,8 +2,10 @@
 
 An intuitive web application that simplifies the process of locating, reserving, and managing EV charging stations. Designed to enhance the user experience for electric vehicle owners, this system combines real-time updates, dynamic reservations, and detailed reports to create a seamless charging experience. 
 
-🌟 Features
-🔍 EV Station Search
+## 🌟 Features
+
+### 🔍 EV Station Search
+
 Search for EV stations by location using an interactive map.
 View station availability, operational status, power output, and user ratings.
 📍 Real-Time Map Integration
