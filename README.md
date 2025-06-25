@@ -57,6 +57,7 @@ Backend:
 Node.js & Express: For handling API endpoints and server logic.
 
 MongoDB: For efficient and scalable data storage.
+
 JSON Web Tokens (JWT): For secure authentication.
 Mongoose: For schema-based MongoDB interaction.
 
