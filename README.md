@@ -74,11 +74,13 @@ MongoDB instance (local or cloud, e.g., MongoDB Atlas)
 
 Clone the repository:
 
-bash
-Copy code
+```bash
+
 git clone https://github.com/yourusername/ev-station-search.git
 cd ev-station-search
 Install dependencies:
+
+```
 
 bash
 Copy code
