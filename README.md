@@ -17,6 +17,7 @@ Integrated with Leaflet for interactive maps.
 Displays custom markers for station statuses: Available, Occupied, Not Working, or No Information.
 
 ###  📊 Reservation Management
+
 Real-time reservation tracking with automatic updates.
 Allows users to reserve stations, with reservations dynamically stored in their profiles.
 📈 Detailed Reports
