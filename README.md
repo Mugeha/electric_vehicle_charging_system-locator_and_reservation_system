@@ -82,9 +82,7 @@ Install dependencies:
 
 ```
 
-bash
-Copy code
-# For backend
+**For backend**
 cd backend
 npm run dev
 
