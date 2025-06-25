@@ -51,6 +51,7 @@ Axios: For seamless communication with the backend API.
 Toastify: For responsive notifications (errors, successes).
 
 Leaflet: For interactive map integration.
+
 Backend:
 Node.js & Express: For handling API endpoints and server logic.
 MongoDB: For efficient and scalable data storage.
