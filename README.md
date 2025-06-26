@@ -97,7 +97,7 @@ cd ../frontend
 npm install
 ```
 
-Set up environment variables:
+**Set up environment variables:**
 
 In the backend folder, create a .env file with the following:
 env
