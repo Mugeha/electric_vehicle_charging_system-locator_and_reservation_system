@@ -131,8 +131,6 @@ Open your browser and visit http://localhost:3000.
 
 ### 📂 Folder Structure
 
-arduino
-Copy code
 ev-station-search/
 │
 ├── backend/
