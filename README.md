@@ -123,8 +123,10 @@ npm run dev
 
 ### Start frontend
 
+```
 cd ../frontend
 npm start
+```
 Open your browser and visit http://localhost:3000.
 
 📂 Folder Structure
