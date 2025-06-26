@@ -91,6 +91,7 @@ npm run dev
 ```
 
 **For frontend**
+
 cd ../frontend
 npm install
 Set up environment variables:
