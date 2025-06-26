@@ -132,6 +132,7 @@ Open your browser and visit http://localhost:3000.
 ### 📂 Folder Structure
 
 ev-station-search/
+
 │
 ├── backend/
 │   ├── controllers/
