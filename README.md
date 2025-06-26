@@ -111,6 +111,7 @@ In the frontend folder, create a .env file with:
 ```
 REACT_APP_MAP_API_KEY=your_google_maps_api_key
 ```
+
 Start the application:
 
 bash
