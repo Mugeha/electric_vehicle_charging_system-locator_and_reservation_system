@@ -114,8 +114,7 @@ REACT_APP_MAP_API_KEY=your_google_maps_api_key
 
 Start the application:
 
-bash
-Copy code
+
 # Start backend
 cd backend
 npm run dev
