@@ -101,10 +101,11 @@ npm install
 
 In the backend folder, create a .env file with the following:
 
-
+```
 PORT=5000
 MONGO_URI=your_mongo_connection_string
 JWT_SECRET=your_jwt_secret
+```
 In the frontend folder, create a .env file with:
 env
 Copy code
