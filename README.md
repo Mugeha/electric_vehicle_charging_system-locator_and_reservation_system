@@ -129,7 +129,8 @@ npm start
 ```
 Open your browser and visit http://localhost:3000.
 
-📂 Folder Structure
+### 📂 Folder Structure
+
 arduino
 Copy code
 ev-station-search/
