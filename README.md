@@ -121,7 +121,8 @@ cd backend
 npm run dev
 ```
 
-# Start frontend
+### Start frontend
+
 cd ../frontend
 npm start
 Open your browser and visit http://localhost:3000.
