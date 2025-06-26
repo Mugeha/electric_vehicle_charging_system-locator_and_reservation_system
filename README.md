@@ -100,6 +100,7 @@ npm install
 **Set up environment variables:**
 
 In the backend folder, create a .env file with the following:
+
 env
 Copy code
 PORT=5000
