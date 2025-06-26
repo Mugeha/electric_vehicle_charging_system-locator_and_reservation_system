@@ -107,6 +107,7 @@ MONGO_URI=your_mongo_connection_string
 JWT_SECRET=your_jwt_secret
 ```
 In the frontend folder, create a .env file with:
+
 env
 Copy code
 REACT_APP_MAP_API_KEY=your_google_maps_api_key
