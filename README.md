@@ -150,6 +150,7 @@ ev-station-search/
 ├── frontend/
 
 │   ├── public/
+
 │   ├── src/
 │   │   ├── components/
 │   │   ├── pages/
