@@ -169,6 +169,7 @@ We welcome contributions to make this project better! Here's how you can contrib
 Fork the repository.
 
 Create a feature branch:
+
 bash
 Copy code
 git checkout -b feature/your-feature-name
