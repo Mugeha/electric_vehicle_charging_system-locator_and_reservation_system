@@ -162,7 +162,7 @@ ev-station-search/
 │
 └── README.md
 
-🤝 Contribution
+### 🤝 Contribution
 
 We welcome contributions to make this project better! Here's how you can contribute:
 
