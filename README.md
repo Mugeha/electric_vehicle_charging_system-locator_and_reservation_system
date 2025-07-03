@@ -170,9 +170,10 @@ Fork the repository.
 
 Create a feature branch:
 
-bash
-Copy code
+```
 git checkout -b feature/your-feature-name
+```
+
 Commit your changes and push:
 bash
 Copy code
