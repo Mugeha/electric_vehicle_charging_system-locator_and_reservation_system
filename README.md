@@ -175,6 +175,7 @@ git checkout -b feature/your-feature-name
 ```
 
 Commit your changes and push:
+
 bash
 Copy code
 git commit -m "Add your message"
