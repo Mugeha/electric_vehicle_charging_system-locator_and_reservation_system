@@ -148,6 +148,7 @@ ev-station-search/
 │   └── server.js
 │
 ├── frontend/
+
 │   ├── public/
 │   ├── src/
 │   │   ├── components/
