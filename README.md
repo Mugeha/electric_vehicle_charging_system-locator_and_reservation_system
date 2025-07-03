@@ -144,7 +144,7 @@ ev-station-search/
 │   ├── utils/
 
 │   └── server.js
-│
+
 ├── frontend/
 
 │   ├── public/
@@ -160,6 +160,7 @@ ev-station-search/
 │   │   └── App.js
 │
 └── README.md
+
 🤝 Contribution
 We welcome contributions to make this project better! Here's how you can contribute:
 
