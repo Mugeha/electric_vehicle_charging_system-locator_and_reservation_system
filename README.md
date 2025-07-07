@@ -190,6 +190,7 @@ Open a Pull Request.
 Home Page:
 
 An intuitive map interface for searching EV stations.
+
 ![Screenshot 2024-11-19 223606](./assets/sn1.png)
 
 Secure Authentication: 
