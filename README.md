@@ -208,6 +208,7 @@ Reserve Page
 ![Screenshot 2024-11-19 225032](./assets/sn5.png)
 
 Fetching reservations
+
 ![Screenshot 2024-11-19 225032](./assets/sn6.png)
 
 Reports:
