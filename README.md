@@ -222,6 +222,7 @@ Generate detailed reports on usage and reservations.
  Add more global search functionality.
  
  Include charging cost estimation.
+ 
  Real-time notifications for station updates.
  AI-based station recommendations based on usage history.
  Use microservices architecture.
