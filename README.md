@@ -224,6 +224,7 @@ Generate detailed reports on usage and reservations.
  Include charging cost estimation.
  
  Real-time notifications for station updates.
+ 
  AI-based station recommendations based on usage history.
  Use microservices architecture.
  Refactoring the entire component into reusable pieces.
