@@ -217,7 +217,7 @@ Generate detailed reports on usage and reservations.
 
 ![Screenshot 2024-11-19 225032](./assets/sn7.png)
 
-📌 Roadmap
+### 📌 Roadmap
 
  Add more global search functionality.
  Include charging cost estimation.
