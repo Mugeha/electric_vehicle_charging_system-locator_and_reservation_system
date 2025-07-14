@@ -6,7 +6,7 @@ An intuitive web application that simplifies the process of locating, reserving,
 
 ### 🔍 EV Station Search
 
-Search for EV stations by location using an interactive map.
+- Search for EV stations by location using an interactive map.
 
 View station availability, operational status, power output, and user ratings.
 
