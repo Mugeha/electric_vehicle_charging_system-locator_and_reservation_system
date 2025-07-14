@@ -8,7 +8,7 @@ An intuitive web application that simplifies the process of locating, reserving,
 
 - Search for EV stations by location using an interactive map.
 
-View station availability, operational status, power output, and user ratings.
+- View station availability, operational status, power output, and user ratings.
 
 ### 📍 Real-Time Map Integration
 
