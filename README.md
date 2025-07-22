@@ -14,7 +14,7 @@ An intuitive web application that simplifies the process of locating, reserving,
 
 - Integrated with Leaflet for interactive maps.
 
-Displays custom markers for station statuses: Available, Occupied, Not Working, or No Information.
+- Displays custom markers for station statuses: Available, Occupied, Not Working, or No Information.
 
 ###  📊 Reservation Management
 
