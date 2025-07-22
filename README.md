@@ -12,7 +12,7 @@ An intuitive web application that simplifies the process of locating, reserving,
 
 ### 📍 Real-Time Map Integration
 
-Integrated with Leaflet for interactive maps.
+- Integrated with Leaflet for interactive maps.
 
 Displays custom markers for station statuses: Available, Occupied, Not Working, or No Information.
 
